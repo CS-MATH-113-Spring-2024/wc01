@@ -32,7 +32,18 @@
 \end{parts}
 
 \begin{solution}
-    % Enter your solution here.
+\text{}. 
+(a). To identify the faulty apple in the 5 apples present where 1 apple is definetely faulty, the following method can be used: 
+1. First Scan: Select and scan any 3 apples. If the scan indicates a faulty apple, Dr. Crusher knows that the faulty apple is in the three apples selected. If the scan shows no faulty apples then she moves to the next step. 
+2. Second Scan: If the first scan did not identify any faulty apple then, she selects 2 apples from the remaining unscanned apples. If the scan indicates a faulty apple she knows the faulty apples otherwise the remaining apple is the faulty one. 
+
+(b). To guarantee finding the single faulty apple in a bunch of size n, Dr. Crusher can use a binary search approach. She can repeatedly divide the bunch into two halves and perform scans based on the results.
+If n is even, She can use a 2 scan method: 
+First Scan: She selects half the apples and scans them. If the scan indicates a faulty apple, she repeats the process with the identified half. If the scan shows no faults, she proceeds to the next step.
+Second Scan: She selects quarter or n/4 apples from the remaining unscanned ones. If the scan indicates a faulty apple, she repeats the process with the identified half. If the scan shows no faults, she proceeds to the next step. She continues this process until she identifies the faulty apple.
+
+If n is odd, the process is same, but she can start with either the larger or smaller half in the first step.
+
 \end{solution}
 
 \end{questions}
