@@ -1,10 +1,15 @@
 \documentclass[a4paper]{exam}
 
+\usepackage{amsthm}
+\usepackage{forest}
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{titling}
 
+\usepackage{draftwatermark}
+\SetWatermarkText{Sample Solution}
+\SetWatermarkScale{3}
 \printanswers
 
 \title{Weekly Challenge 01: Comparison}
@@ -27,12 +32,40 @@
   The \href{https://en.wikipedia.org/wiki/Replicator_(Star_Trek)}{replicator} aboard USS Enterprise has developed a fault---synthesized apples have insufficient nutrition but are otherwise identical to regular apples. Doctor \href{https://memory-alpha.fandom.com/wiki/Beverly_Crusher}{Beverly Crusher} is on the case. Scanning a bunch of apples, her \href{https://en.wikipedia.org/wiki/Medical_tricorder}{tricorder} can indicate if the bunch contains any faulty apples, but it cannot identify them.
 \end{minipage}
 \begin{parts}
-  \part Dr. Crusher is investigating a bunch of 5 apples out of which 1 is known to be faulty. Describe how she can identify the faulty apple in no more than 3 tricorder scans.
+  \part Dr. Crusher is investigating a bunch of 5 apples out of which, 1 is known to be faulty. Describe how she can identify the faulty apple in no more than 3 tricorder scans.
   \part What is the minimum number of scans that Dr. Crusher needs to perform in order to guarantee finding the single faulty apple in a bunch of size $n$? Justify your answer.
 \end{parts}
 
 \begin{solution}
-    % Enter your solution here.
+  \begin{parts}
+    \part Let us call the apples, $a_1, a_2, a_3, a_4,$ and $a_5$. Dr. Crusher can identify the faulty apple in a maximum of 3 scans as follows. Let F and NF stand for ``Faulty'' and ``Not Faulty''.
+    
+\centerline{    \begin{forest}
+      [Scan bunch: $a_1a_2a_3$
+      [Scan bunch: $a_1a_2$, edge label={node[midway,left,font=\scriptsize]{F}}
+      [Scan bunch: $a_1$, edge label={node[midway,left,font=\scriptsize]{F}}
+      [$a_1$, edge label={node[midway,left,font=\scriptsize]{F}}]
+      [$a_2$, edge label={node[midway,right,font=\scriptsize]{NF}}]
+      ]
+      [$a_3$, edge label={node[midway,right,font=\scriptsize]{NF}}]
+      ]
+      [Scan bunch: $a_4$, edge label={node[midway,right,font=\scriptsize]{NF}}
+      [$a_4$, edge label={node[midway,left,font=\scriptsize]{F}}]
+      [$a_5$, edge label={node[midway,right,font=\scriptsize]{NF}}]
+      ]
+      ]
+    \end{forest}}
+  \part The minimum number of scans in which Dr. Crusher is guaranteed to find the single faulty apple among $n$ apples is $\lceil \log_2 n\rceil$.
+  \begin{proof}
+    The purpose of each scan is to divide the current bunch into two halves and identify the half in which the faulty apple resides. So, given $n$ apples, we would scan half of them in order to identify the half to explore further. As $n$ may not be divisible by 2, the size of the two halves can be denoted as $\lceil\frac{n}{2}\rceil$ and $\lfloor\frac{n}{2}\rfloor$. This process then repeats for the identified half, and so on, until the identified half has a size of $1$.
+    
+    Thus, the maximum number of scans required for $n$ apples is the number of times that $n$ can be divided by 2 until the quotient becomes $1$. This is the same as $\log_2n$. Of course, $n$ may not be a power of 2. That is, the size of the bunch at some stages may not be divisible by 2. As mentioned, at such stages, the halves have sizes $\lceil\frac{n}{2}\rceil$ and $\lfloor\frac{n}{2}\rfloor$. This leads to an expression of $\lceil \log_2n \rceil$.
+  \end{proof}
+
+    We can verify the expression through the example in the above part in which $n=5$. The two halves have sizes $\lceil\frac{5}{2}\rceil=3$ and $\lfloor\frac{5}{2}\rfloor=2$. In the example above, we scan the half with size $3$. We could have scanned the other half instead and proceeded similarly. The maximum number of needed scans is $\lceil \log_25 \rceil=3$.
+
+    Note that this method gives the minimum number of scans. We can always devise a more inefficient method which uses more scans.
+  \end{parts}
 \end{solution}
 
 \end{questions}
